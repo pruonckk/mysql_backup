@@ -34,14 +34,6 @@ exec_limpeza(){
 }
 
 
-case $MYSQL_DUMP_TYPE in
-	'FULL')
-		exec_mysql_d_full
-	;;
-	'DATABASES')
-		exec mysql_d_databases
-	;;
-esac
 
 # definincao da retencao
 RETENCAO=15
@@ -69,12 +61,20 @@ exec_mysql_d_databases(){
                 echo "Criado Diretorio: $DIFFDIR/$(date +%Y)/$(date +%m)/$(date +%d)/$SERVIDOR/$MYMODULO"
         fi
 
-	for DATABASESES in $(/usr/bin/mysql -u${MYSQL_USER} -p${MYSQL_PASS} -e "show databases" | sed 1d); do
+	for DATABASES in $(/usr/bin/mysql -u${MYSQL_USER} -p${MYSQL_PASS} -e "show databases" | sed 1d); do
 		echo "Dumping database: $DATABASES"
-		/usr/bin/mysqldump -u${MYSQL_USER} -p${MYSQL_PASS} --database ${DATABASES} > $DIFFDIR/$(date +%Y)/$(date +%m)/$(date +%d)/$SERVIDOR/$MYMODULO/$DATABASES}.sql
+		/usr/bin/mysqldump -u${MYSQL_USER} -p${MYSQL_PASS} --database ${DATABASES} > $DIFFDIR/$(date +%Y)/$(date +%m)/$(date +%d)/$SERVIDOR/$MYMODULO/${DATABASES}.sql
         	/usr/bin/gzip $DIFFDIR/$(date +%Y)/$(date +%m)/$(date +%d)/$SERVIDOR/$MYMODULO/${DATABASES}.sql
 
 	done
 }
 
+case $MYSQL_DUMP_TYPE in
+	'FULL')
+		exec_mysql_d_full
+	;;
+	'DATABASES')
+		exec mysql_d_databases
+	;;
+esac
 
