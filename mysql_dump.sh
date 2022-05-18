@@ -31,8 +31,8 @@ exec_limpeza(){
 	DAYSM=`date +%m -d "$RETENCAO day ago"`
 
 
-	if [ -d $DIFFDIR/$DAYSY/$DAYSM/$DAYSD/$SERVIDOR ]; then 
-		echo "Executando limpeza do diretorio : ${DIFFDIR}/${DAYSY}/${DAYSM}/${DAYSD}/${SERVIDOR}"
+	if [ -d $DIFFDIR/$DAYSY/$DAYSM/$DAYSD/$SERVIDOR_NOME ]; then 
+		echo "Executando limpeza do diretorio : ${DIFFDIR}/${DAYSY}/${DAYSM}/${DAYSD}/${SERVIDOR_NOME}"
 		rm -rf ${DIFFDIR}/${DAYSY}/${DAYSM}/${DAYSD}
 
 
